@@ -79,6 +79,7 @@ class Client:
         self._rtp_receive_thread.setDaemon(True)
         self._rtp_receive_thread.start()
 
+    # receive server RTP packet
     def _handle_video_receive(self):
         self._rtp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self._rtp_socket.bind((self.DEFAULT_LOCAL_HOST, self.rtp_port))
@@ -108,6 +109,7 @@ class Client:
         self._rtsp_connection.close()
         self.is_rtsp_connected = False
 
+    # send RTSP packet to server
     def _send_request(self, request_type=RTSPPacket.INVALID) -> RTSPPacket:
         if not self.is_rtsp_connected:
             raise Exception('rtsp connection not established. run `setup_rtsp_connection()`')

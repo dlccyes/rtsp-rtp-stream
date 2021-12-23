@@ -27,7 +27,14 @@ class VideoStream:
             frame_length = self._stream.read(self.FRAME_HEADER_LENGTH)
         except ValueError:
             raise EOFError
+        # print(frame_length)
+        # print(frame_length.decode())
+        # print([i for i in frame_length])
+        # return
         frame_length = int(frame_length.decode())
+        # frame_length = 6014
+        # print(frame_length,'------------------------')
+        # return
         frame = self._stream.read(frame_length)
         self.current_frame_number += 1
         return bytes(frame)

@@ -36,6 +36,7 @@ class Server:
 
         self.rtsp_port = rtsp_port
 
+    # receive RTSP packet from client
     def _rtsp_recv(self, size=DEFAULT_CHUNK_SIZE) -> bytes:
         recv = None
         while True:
@@ -94,6 +95,7 @@ class Server:
         self._rtp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self._start_rtp_send_thread()
 
+    # change to new state (FSM)
     def handle_rtsp_requests(self):
         print("Waiting for RTSP requests...")
         # main thread will be running here most of the time
@@ -138,6 +140,7 @@ class Server:
             # trim bytes sent
             to_send = to_send[self.DEFAULT_CHUNK_SIZE:]
 
+    # send video frames in RTP packet
     def _handle_video_send(self):
         print(f"Sending video to {self._client_address[0]}:{self._client_address[1]}")
         while True:
